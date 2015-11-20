@@ -20,6 +20,7 @@
   },
   "devDependencies": {
 		"chai": "*",
+    "sinon": "*",
 		"sinon-chai": "*",
     "mocha": "*",
 		"expect.js": "*",
