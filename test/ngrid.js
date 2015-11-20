@@ -1,4 +1,3 @@
-var Buffer = require('buffer');
 var fs = require('fs');
 var Q = require('q');
 var chai = require("chai");
@@ -53,20 +52,21 @@ describe(
 		it(
 			'writes a file to a ngrid instance', 
 			function() {
-				var incomingStream = fs.createReadStream('./test.js');
+				var incomingStream = fs.createReadStream(__dirname + '/test.js');
 				var fileName = 'ngrid_tests_test.js';
 				var options = {
 					content_type: 'application/javascript',
-					metaData: {
+					metadata: {
 						tags: [ 'ngridTest' ]
 					}
 				};
 				var thisPromise = ngrid.write(
 					fileName, incomingStream, options
 				).then(
-					function(data) {
-						expect(data._id).to.be.a('object');
-						return data;
+					function(file) {
+						expect(file.filename).to.eq(fileName);
+						expect(file._id).to.be.a('object');
+						return file;
 					}
 				).catch(
 					function(err) {
@@ -93,9 +93,9 @@ describe(
 				).then(
 					function(files) {
 						expect(files).to.be.a('Array');
-						expect(files.length).to.be.eq(1);
+						expect(files.length).to.be.above(0);
 						expect(files[0]).to.be.a('object');
-						expect(files[0]._filename).to.eq(fileName);
+						expect(files[0].filename).to.eq(fileName);
 						return files;
 					}
 				).catch(
@@ -117,13 +117,13 @@ describe(
 		it(
 			'reads a file by filename from a ngrid instance', 
 			function() {
-				var fsFileBuffer = fs.readFileSync('./test.js');
+				var fsFileBuffer = fs.readFileSync(__dirname + '/test.js');
 				var fileName = 'ngrid_tests_test.js';
 				var thisPromise = ngrid.read(
 					fileName//, outlet //, start, end
 				).then(
 					function(ngridFileBuffer) {
-						expect(ngridFileBuffer).to.be.a('Buffer');
+						expect(ngridFileBuffer instanceof Buffer).to.eq(true);
 						expect(ngridFileBuffer.equals(fsFileBuffer)).to.eq(true);
 						return ngridFileBuffer;
 					}
