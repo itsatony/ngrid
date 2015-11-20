@@ -1,0 +1,28 @@
+{
+  "name": "ngrid",
+  "description": "a grid-fs endpoint implementation",
+  "version": "0.1.0",
+  "author": "Toni Wagner <i@itsatony.com>",
+  "engine": "node >= 0.10",
+	"scripts": {	
+		"test": "mocha test/test.js"		
+	},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Klab-Berlin/ngrid.git"
+  },
+  "dependencies": {
+    "gridfs-stream": "latest",
+    "json-stringify-safe": "latest",
+    "mongodb": "~2.0",
+    "mongoose": "^4.1.1",
+    "q": "latest",
+  },
+  "devDependencies": {
+		"chai": "*",
+		"sinon-chai": "*",
+    "mocha": "*",
+		"expect.js": "*",
+		"chai-as-promised": "*"
+  }
+}
