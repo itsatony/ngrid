@@ -16,7 +16,7 @@
     "json-stringify-safe": "latest",
     "mongodb": "~2.0",
     "mongoose": "^4.1.1",
-    "q": "latest",
+    "q": "latest"
   },
   "devDependencies": {
 		"chai": "*",
