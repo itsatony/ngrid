@@ -65,6 +65,7 @@ describe(
 				var options = {
 					content_type: 'application/javascript',
 					metadata: {
+                        testValue: "testValue",
 						tags: [ 'ngridTest' ]
 					}
 				};
@@ -114,7 +115,8 @@ describe(
 								expect(files).to.be.a('Array');
 								expect(files.length).to.be.above(0);
 								expect(files[0]).to.be.a('object');
-								expect(files[0].filename).to.eq(fileName);
+                                expect(files[0].filename).to.eq(fileName);
+                                expect(files[0].metadata.testValue).to.eq("testValue");
 								return files;
 							}
 						).then(
@@ -176,12 +178,12 @@ describe(
 
 
 describe(
-	'ngrid.remove', 
+	'ngrid.remove',
 	function() {
 		it(
-			'removes a file by filename from a ngrid instance', 
-			function() {		
-				var fileName = 'ngrid_tests_test.js';				
+			'removes a file by filename from a ngrid instance',
+			function() {
+				var fileName = 'ngrid_tests_test.js';
 				return Q.Promise(
 					function(resolve, reject) {
 						var thisPromise = ngrid.remove(
