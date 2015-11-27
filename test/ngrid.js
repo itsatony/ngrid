@@ -63,6 +63,7 @@ describe(
                 var incomingStream = fs.createReadStream(__dirname + '/test.js');
                 var fileName = 'ngrid_tests_test.js';
                 var options = {
+                    filename: fileName,
                     content_type: 'application/javascript',
                     metadata: {
                         testValue: "testValue",
@@ -72,7 +73,7 @@ describe(
                 return Q.Promise(
                     function (resolve, reject) {
                         var thisPromise = ngrid.write(
-                            fileName, incomingStream, options
+                            options, incomingStream
                         ).then(
                             function (file) {
                                 expect(file.filename).to.eq(fileName);
