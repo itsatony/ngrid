@@ -9,6 +9,7 @@ var expect = chai.expect;
 // chai.use(chaiAsPromised);
 
 var NGrid = require('../lib/ngrid');
+var id = null;
 
 describe(
     'ngrid.create',
@@ -22,6 +23,7 @@ describe(
                         ).then(
                             function (thisNGrid) {
                                 ngrid = thisNGrid;
+                                id = ngrid.createId();
                             }
                         ).then(
                             function () {
@@ -63,6 +65,7 @@ describe(
                 var incomingStream = fs.createReadStream(__dirname + '/test.js');
                 var fileName = 'ngrid_tests_test.js';
                 var options = {
+                    _id: id,
                     filename: fileName,
                     content_type: 'application/javascript',
                     metadata: {
@@ -110,7 +113,10 @@ describe(
                 return Q.Promise(
                     function (resolve, reject) {
                         var thisPromise = ngrid.find(
-                            fileName
+                            {
+                                _id: id,
+                                filename: fileName
+                            }
                         ).then(
                             function (files) {
                                 expect(files).to.be.a('Array');
@@ -118,6 +124,7 @@ describe(
                                 expect(files[0]).to.be.a('object');
                                 expect(files[0].filename).to.eq(fileName);
                                 expect(files[0].metadata.testValue).to.eq("testValue");
+                                expect(files[0]._id.toString()).to.equal(id.toString());
                                 return files;
                             }
                         ).then(
@@ -185,14 +192,17 @@ describe(
             'removes a file by filename from a ngrid instance',
             function () {
                 var fileName = 'ngrid_tests_test.js';
+                var options = {
+                    _id: id,
+                    filename: fileName
+                };
                 return Q.Promise(
                     function (resolve, reject) {
-                        var thisPromise = ngrid.remove(
-                            fileName
+                        var thisPromise = ngrid.remove(options
                         ).then(
-                            function (filename) {
-                                expect(filename).to.eq(fileName);
-                                return filename;
+                            function (opts) {
+                                expect(opts).to.eq(options);
+                                return opts;
                             }
                         ).then(
                             function (data) {
@@ -207,7 +217,8 @@ describe(
                         );
                         return thisPromise;
                     }
-                );
+                )
+                    ;
             }
         );
     }
