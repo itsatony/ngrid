@@ -10,7 +10,7 @@ var expect = chai.expect;
 
 var NGrid = require('../lib/ngrid');
 var id = null;
-var monogUrl = (typeof process.env.MONGODB_PORT_27017_TCP_ADDR === 'string')
+var mongoUrl = (typeof process.env.MONGODB_PORT_27017_TCP_ADDR === 'string')
 	? 'mongodb://' + process.env.MONGODB_PORT_27017_TCP_ADDR + ':' + process.env.MONGODB_PORT_27017_TCP_PORT
 	: 'mongodb://localhost:27017'
 ;
