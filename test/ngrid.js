@@ -10,6 +10,10 @@ var expect = chai.expect;
 
 var NGrid = require('../lib/ngrid');
 var id = null;
+var monogUrl = (typeof process.env.MONGODB_PORT_27017_TCP_ADDR === 'string')
+	? 'mongodb://' + process.env.MONGODB_PORT_27017_TCP_ADDR + ':' + MONGODB_PORT_27017_TCP_PORT
+	: 'mongodb://localhost:27017'
+;
 
 describe(
     'ngrid.create',
@@ -20,7 +24,7 @@ describe(
                 return Q.Promise(
                     function (resolve, reject) {
                         NGrid(
-													process.env.MONGO_URL
+													mongoUrl
                         ).then(
                             function (thisNGrid) {
                                 ngrid = thisNGrid;
