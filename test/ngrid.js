@@ -20,6 +20,7 @@ describe(
                 return Q.Promise(
                     function (resolve, reject) {
                         NGrid(
+													process.env.MONGO_URL
                         ).then(
                             function (thisNGrid) {
                                 ngrid = thisNGrid;
